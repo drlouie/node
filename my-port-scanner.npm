@@ -8,10 +8,10 @@ var terminalPrompt = require('prompt');
 terminalPrompt.start();
 
 /* prompt the user for host */
-terminalPrompt.get([{name:'host',description:'Enter host name or IP address to scan'}], function (err, result) {
+terminalPrompt.get([{name:'host',description:'Enter host name or IP address to scan'}], function (err, input) {
 
 	/* attach user input to host variable */
-	var host = result.host;
+	var host = input.host;
 
 	/* what type of scan should we tell user we are doing? use a conditional statment to find out */
 	var amScanning = (host != '' ? host : 'localhost');
