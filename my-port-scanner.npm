@@ -1,0 +1,81 @@
+/* load net module, which provides asynchronous network wrapper */
+var net = require('net');
+
+/* load the command-line prompt module */
+var terminalPrompt = require('prompt');
+
+/* initiate the prompt module */
+terminalPrompt.start();
+
+/* prompt the user for host */
+terminalPrompt.get([{name:'host',description:'Enter host name or IP address to scan'}], function (err, result) {
+
+	/* attach user input to host variable */
+	var host = result.host;
+
+	/* what type of scan should we tell user we are doing? use a conditional statment to find out */
+	var amScanning = (host != '' ? host : 'localhost');
+
+	/* report to user the fact scanning has started */
+    console.log('\nScannning ' + amScanning + ' for open ports.\n');
+
+	/* port to start scan at */
+	var startPort = 1;
+
+	/* port to end scan at */
+	var endPort = 1000;
+
+	/* leave this, may not work if changed */
+	var timeout = 2000;
+
+	/* port scan loop */
+	while (startPort <= endPort) {
+
+		/* port we are currently working with is tied to the loop counter startPort */
+		var port = startPort;
+		/* encapsulate port to keep its value prestine throughout its processing */
+		(function(port) {
+
+			/* initialize a new socket connection */
+			var s = new net.Socket();
+
+			/* destroy a socket after [timeout] seconds */
+			s.setTimeout(timeout, function() { s.destroy(); });
+
+			/* use to socket to connect to remote host */
+			s.connect(port, host, function() {
+
+				/* if port found to be open, report it */
+				console.log(port + ' is open.\n');
+
+				/* don't destroy socket, let it time out after 2 seconds */
+
+			});
+
+			/* if port connection information is available */
+			s.on('data', function(data) {
+
+				/* print port connection information */
+				console.log('Port ' + port +' information ::: '+ data);
+
+				/* destroy socket */
+				s.destroy();
+				
+			});
+
+			/* if error */
+			s.on('error', function(e) {
+
+				/* destroy socket */
+				s.destroy();
+				
+			});
+
+		/* callback */
+		})(port);
+
+		/* loop count */
+		startPort++;
+	}
+});
+
