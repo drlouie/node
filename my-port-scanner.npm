@@ -11,10 +11,10 @@ terminalPrompt.start();
 terminalPrompt.get([{name:'host',description:'Enter host name or IP address to scan'}], function (err, input) {
 
 	/* attach user input to host variable */
-	var host = input.host;
+	var hostToScan = input.host;
 
 	/* what type of scan should we tell user we are doing? use a conditional statment to find out */
-	var amScanning = (host != '' ? host : 'localhost');
+	var amScanning = (hostToScan != '' ? hostToScan : 'localhost');
 
 	/* report to user the fact scanning has started */
     console.log('\nScannning ' + amScanning + ' for open ports.\n');
@@ -43,7 +43,7 @@ terminalPrompt.get([{name:'host',description:'Enter host name or IP address to s
 			socket.setTimeout(timeout, function() { socket.destroy(); });
 
 			/* use to socket to connect to remote host */
-			socket.connect(port, host, function() {
+			socket.connect(port, hostToScan, function() {
 
 				/* if port found to be open, report it */
 				console.log(port + ' is open.\n');
@@ -78,4 +78,3 @@ terminalPrompt.get([{name:'host',description:'Enter host name or IP address to s
 		startPort++;
 	}
 });
-
