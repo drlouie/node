@@ -53,10 +53,10 @@ terminalPrompt.get([{name:'host',description:'Enter host name or IP address to s
 			});
 
 			/* if port connection information is available */
-			socket.on('data', function(data) {
+			socket.on('data', function(response) {
 
 				/* print port connection information */
-				console.log('Port ' + port +' information ::: '+ data);
+				console.log('Port ' + port +' information ::: '+ response);
 
 				/* destroy socket */
 				socket.destroy();
