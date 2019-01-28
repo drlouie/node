@@ -37,13 +37,13 @@ terminalPrompt.get([{name:'host',description:'Enter host name or IP address to s
 		(function(port) {
 
 			/* initialize a new socket connection */
-			var s = new net.Socket();
+			var socket = new net.Socket();
 
 			/* destroy a socket after [timeout] seconds */
-			s.setTimeout(timeout, function() { s.destroy(); });
+			socket.setTimeout(timeout, function() { socket.destroy(); });
 
 			/* use to socket to connect to remote host */
-			s.connect(port, host, function() {
+			socket.connect(port, host, function() {
 
 				/* if port found to be open, report it */
 				console.log(port + ' is open.\n');
@@ -53,21 +53,21 @@ terminalPrompt.get([{name:'host',description:'Enter host name or IP address to s
 			});
 
 			/* if port connection information is available */
-			s.on('data', function(data) {
+			socket.on('data', function(data) {
 
 				/* print port connection information */
 				console.log('Port ' + port +' information ::: '+ data);
 
 				/* destroy socket */
-				s.destroy();
+				socket.destroy();
 				
 			});
 
 			/* if error */
-			s.on('error', function(e) {
+			socket.on('error', function(e) {
 
 				/* destroy socket */
-				s.destroy();
+				socket.destroy();
 				
 			});
 
