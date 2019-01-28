@@ -1,5 +1,5 @@
 /* load net module, which provides asynchronous network wrapper */
-var networkWrapper = require('net');
+var network = require('net');
 
 /* load the command-line prompt module */
 var terminalPrompt = require('prompt');
@@ -37,7 +37,7 @@ terminalPrompt.get([{name:'host',description:'Enter host name or IP address to s
 		(function(port) {
 
 			/* initialize a new socket connection */
-			var socket = new networkWrapper.Socket();
+			var socket = new network.Socket();
 
 			/* destroy a socket after [timeout] seconds */
 			socket.setTimeout(timeout, function() { socket.destroy(); });
