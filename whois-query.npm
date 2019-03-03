@@ -1,0 +1,57 @@
+/* load the WHOIS client */
+var whois = require('whois');
+
+/* load the command-line prompt module */
+var terminalPrompt = require('prompt');
+
+/* whoisQuery method which takes a domain name as an argument */
+var whoisQuery = function(domain) {
+
+	/* Take note of the time we start processing this user request */
+	var startProcess = Date.now();
+	/* attach input to domain variable */
+	var DomainNameToQuery = domain;
+
+	/* for use in printing out vertical spacers in our output */
+	var dashed = '-';
+	
+	/* in a new line, print out 55 dashes to the screen */
+	console.log(dashed.repeat(55));
+	/* in a new line, print out the following to the screen */
+    console.log('\nQuerying WHOIS...\n');
+	/* in a new line, print out 55 dashes to the screen */
+	console.log(dashed.repeat(55));
+
+	/* Run WHOIS query on DomainNameToQuery using the Node WHOIS client */
+	whois.lookup(DomainNameToQuery, function(err, data) {
+	
+		/* Print out returned raw data (JSON), to the client */
+		console.log(data)
+
+		/* Take note of the time we end processing this user request */
+		var endProcess = Date.now();
+		/* Find how long it took to process this request, by subtracting the startProcess time from the endProcess time */
+		var timeDifference = endProcess - startProcess;
+
+
+		/* in a new line, print out 55 dashes to the screen */
+		console.log(dashed.repeat(55));
+		/* report to user the fact scanning has ended as well as how long */
+		console.log('\WHOIS query completed in '+timeDifference+' milliseconds...\n');
+		/* in a new line, print out 55 dashes to the screen */
+		console.log(dashed.repeat(55));
+	});
+};
+
+/* initiate the prompt module */
+terminalPrompt.start();
+
+/* prompt the user for domain */
+terminalPrompt.get([{name:'domain',description:'Enter domain name to run a WHOIS query upon'}], function (err, input) {
+
+	/* attach user input to domain variable */
+	var DomainNameToQuery = input.domain;
+
+	/* run whoisQuery for DomainNameToQuery */
+	var results = whoisQuery(DomainNameToQuery);
+});
