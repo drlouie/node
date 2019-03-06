@@ -22,25 +22,26 @@ var whoisQuery = function(domain) {
 	/* in a new line, print out 55 dashes to the screen */
 	console.log(dashed.repeat(55));
 
-	/* Run WHOIS query on DomainNameToQuery using the Node WHOIS client */
-	whois.lookup(DomainNameToQuery, function(err, data) {
-	
-		/* Print out returned raw data (JSON), to the client */
-		console.log(data)
-
-		/* Take note of the time we end processing this user request */
-		var endProcess = Date.now();
-		/* Find how long it took to process this request, by subtracting the startProcess time from the endProcess time */
-		var timeDifference = endProcess - startProcess;
-
-
-		/* in a new line, print out 55 dashes to the screen */
-		console.log(dashed.repeat(55));
-		/* report to user the fact scanning has ended as well as how long */
-		console.log('\WHOIS query completed in '+timeDifference+' milliseconds...\n');
-		/* in a new line, print out 55 dashes to the screen */
-		console.log(dashed.repeat(55));
-	});
+	/* Only proceed if domain isn't empty */
+	if (domain) {
+		/* Run WHOIS query on DomainNameToQuery using the Node WHOIS client */
+		whois.lookup(DomainNameToQuery, function(err, data) {
+			/* Print out returned raw data (JSON), to the client */
+			console.log(data)
+			/* Take note of the time we end processing this user request */
+			var endProcess = Date.now();
+			/* Find how long it took to process this request, by subtracting the startProcess time from the endProcess time */
+			var timeDifference = endProcess - startProcess;
+			/* in a new line, print out 55 dashes to the screen */
+			console.log(dashed.repeat(55));
+			/* report to user the fact scanning has ended as well as how long */
+			console.log('\WHOIS query completed in '+timeDifference+' milliseconds...\n');
+			/* in a new line, print out 55 dashes to the screen */
+			console.log(dashed.repeat(55));
+		});
+	}
+	/* Return the DomainNameToQuery as presented, as a callback */
+	return DomainNameToQuery;
 };
 
 /* initiate the prompt module */
